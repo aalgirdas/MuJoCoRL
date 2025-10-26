@@ -1,0 +1,84 @@
+<mujoco>
+  <compiler inertiafromgeom="true" autolimits="true"/>
+
+  <asset>
+    <texture name="grid" type="2d" builtin="checker" width="512" height="512" rgb1=".1 .2 .3" rgb2=".2 .3 .4"/>
+    <material name="grid" texture="grid" texrepeat="1 1" texuniform="true" reflectance=".2"/>
+  </asset>
+
+
+  <default>
+    <joint damping="0.04" actuatorfrcrange="-5 5"/>
+ 
+    <default class="chassis">
+      <geom density="1426"/> 
+    </default>
+
+    <default class="wheel">
+      <geom type="cylinder" size="0.04 0.01" rgba="0.306 0.898 0.251 1" density="1426"/>
+    </default>
+  </default>
+
+
+
+
+
+  <worldbody>
+    <camera name="fixed" pos="0 -1.5 0.7" xyaxes="1 0 0 0 1 2"/>
+    <geom type="plane" size="3 3 .01" material="grid"/>
+    
+    <body name="car" pos="0 0 0.04">
+      <freejoint name="car_joint"/>
+      
+      <light name="top light" pos="0 0 2" mode="trackcom" diffuse=".4 .4 .4"/>
+      
+      <geom name="chasis" type="box" size="0.1 0.05 0.025" rgba="0.917 0.145 0.145 1" class="chassis"/>
+
+      <!-- The physical structure of the wheels and pole  -->
+      <body name="right_front_wheel" pos="0.05 -0.06 0" zaxis="0 1 0">
+        <joint name="right_front"/>
+        <geom class="wheel"/>
+      </body>
+      <body name="left_front_wheel" pos="0.05 0.06 0" zaxis="0 1 0">
+        <joint name="left_front"/>
+        <geom class="wheel"/>
+      </body>
+      <body name="right_rear_wheel" pos="-0.05 -0.06 0" zaxis="0 1 0">
+        <joint name="right_rear"/>
+        <geom class="wheel"/>
+      </body>
+      <body name="left_rear_wheel" pos="-0.05 0.06 0" zaxis="0 1 0">
+        <joint name="left_rear"/>
+        <geom class="wheel"/>
+      </body>
+
+      <site name="ds_left_site" type="box" size="0.005 0.005 0.005" rgba="0.184 0.596 0.847 1" 
+            pos="0.1 0.03 0" xyaxes="0.955 0.296 0 -0.296 0.955 0"/>
+      <site name="ds_right_site" type="box" size="0.005 0.005 0.005" rgba="0.184 0.596 0.847 1" 
+            pos="0.1 -0.03 0" xyaxes="0.955 -0.296 0 0.296 0.955 0"/>
+
+      <body name="pole_body" pos="0 0 0.025">
+        <joint name="pole_joint" type="hinge" axis="0 1 0" limited="true" range="-57 57" />
+        <geom name="pole" type="capsule" fromto="0 0 0 0 0 1" size="0.01" 
+              mass="0.2" rgba="1 0.157 0.157 1"/>
+        <site name="tip" pos="0 0 1" size="0.05" rgba="0.0314 0.0471 1. 1" />
+      </body>
+    </body>
+  </worldbody>
+
+
+
+  <actuator>
+    <motor name="motor_rf" joint="right_front" gear="1" ctrlrange="-15 15"/>
+    <motor name="motor_lf" joint="left_front"  gear="1" ctrlrange="-15 15"/>
+    <motor name="motor_rr" joint="right_rear"  gear="1" ctrlrange="-15 15"/>
+    <motor name="motor_lr" joint="left_rear"   gear="1" ctrlrange="-15 15"/>
+  </actuator>
+  
+  <sensor>
+    <!-- Sensors -->
+    <rangefinder name="ds_left" site="ds_left_site"/>
+    <rangefinder name="ds_right" site="ds_right_site"/>
+    <jointpos name="pole_angle_sensor" joint="pole_joint"/>
+  </sensor>
+</mujoco>
