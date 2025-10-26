@@ -58,4 +58,4 @@ The scripts in `CartPoleRL/` define a custom MuJoCo CartPole environment compati
 
 If you use this work or the underlying framework, please cite the associated paper:
 
-*A Dual Digital Twin Framework for Reinforcement Learning
+*A Dual Digital Twin Framework for Reinforcement Learning: Bridging Webots and MuJoCo with Generative AI and Alignment Strategies*
