@@ -11,6 +11,7 @@ The core objective is to provide a validated MuJoCo environment for the CartPole
 The files are organized into subdirectories reflecting the two main phases of the framework: **Alignment** and **Reinforcement Learning**.
 
 
+
 ## 🚀 Setup and Installation
 
 This project requires a working installation of **MuJoCo** and related Python libraries.
